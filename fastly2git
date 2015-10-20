@@ -1,0 +1,63 @@
+#!/usr/bin/ruby
+require 'fastly';
+require 'optparse';
+require 'rugged';
+
+clioptions = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: fastly2git [options]"
+  opts.separator ""
+  opts.separator "Create a git repository from Fastly service generated VCL."
+  opts.separator ""
+  opts.separator "Options"
+
+  opts.on("-a", "--apikey APIKEY", "Fastly API key") do |apikey|
+    clioptions[:apikey] = apikey
+  end
+  opts.on("-s", "--serviceid SERVICEID", "Fastly service ID") do |serviceid|
+    clioptions[:serviceid] = serviceid
+  end
+  opts.on("-d", "--directory DIRECTORY", "Directory") do |directory|
+    clioptions[:directory] = directory
+  end
+  opts.on("-v", "--verbose", "Run verbosely") do |v|
+    clioptions[:verbose] = v
+  end
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+end.parse!
+
+fastly = Fastly.new(api_key: clioptions[:apikey])
+repo = Rugged::Repository.init_at(clioptions[:directory])
+service = fastly.get_service(clioptions[:serviceid]) || die("Couldn't find service #{options[:serviceid]}")
+
+if clioptions[:verbose]
+  puts "Service ID: #{service.id}"
+  puts "Service Name: #{service.name}"
+end
+
+service.versions.each do |version|
+  puts "Importing version #{version.number}..." if clioptions[:verbose]
+
+  vcl = version.generated_vcl
+
+  oid = repo.write(vcl.content, :blob)
+  index = repo.index
+  if (!repo.empty?)
+    index.read_tree(repo.head.target.tree)
+  end
+  index.add(:path => "generated.vcl", :oid => oid, :mode => 0100644)
+  options = {}
+  options[:tree] = index.write_tree(repo)
+  options[:author] = { :email => "user@fastly.com", :name => 'Fastly User', :time => Time.now }
+  options[:committer] = { :email => "user@fastly.com", :name => 'Fastly User', :time => Time.now }
+  options[:message] ||= "Version #{version.number}"
+  options[:parents] = repo.empty? ? [] : [ repo.head.target ].compact
+  options[:update_ref] = 'HEAD'
+  Rugged::Commit.create(repo, options)
+end
+
+repo.checkout_head(:strategy => :safe)
+puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]

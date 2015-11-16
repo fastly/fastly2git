@@ -20,7 +20,7 @@ Options
 # Example
 
 ```
-$ ./fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
+$ ./bin/fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
 Service ID: YYY
 Service Name: xvarnish.astray.com
 Importing version 1...

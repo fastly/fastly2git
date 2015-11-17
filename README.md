@@ -21,7 +21,10 @@ Options
 Clone the repo and then run the following command while in fastly2git
 directory:
 ```
-bundle install && bundle exec rake install
+bundle install # to install dependencies
+bundle exec rake test # to run tests
+bundle exec rake install # to install the gem
+bundle exec rake -T # to see the list of other available rake tasks
 ```
 
 # Example

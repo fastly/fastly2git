@@ -1,7 +1,6 @@
-#!/usr/bin/ruby
-require 'fastly';
+#!/usr/bin/env ruby
+require 'fastly2git';
 require 'optparse';
-require 'rugged';
 
 clioptions = {}
 OptionParser.new do |opts|
@@ -29,35 +28,16 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-fastly = Fastly.new(api_key: clioptions[:apikey])
-repo = Rugged::Repository.init_at(clioptions[:directory])
-service = fastly.get_service(clioptions[:serviceid]) || die("Couldn't find service #{options[:serviceid]}")
-
-if clioptions[:verbose]
-  puts "Service ID: #{service.id}"
-  puts "Service Name: #{service.name}"
+versions = Fastly2Git.versions(clioptions)
+p versions[0]
+begin
+  repo = Rugged::Repository.new(clioptions[:directory])
+rescue Rugged::RepositoryError
+  repo = Rugged::Repository.init_at(clioptions[:directory])
+  Fastly2Git.git(versions, repo, clioptions[:verbose])
+  puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]
+  exit
 end
+raise "Directory #{clioptions[:directory]} is already a Git repository, aborting"
 
-service.versions.each do |version|
-  puts "Importing version #{version.number}..." if clioptions[:verbose]
 
-  vcl = version.generated_vcl
-
-  oid = repo.write(vcl.content, :blob)
-  index = repo.index
-  if (!repo.empty?)
-    index.read_tree(repo.head.target.tree)
-  end
-  index.add(:path => "generated.vcl", :oid => oid, :mode => 0100644)
-  options = {}
-  options[:tree] = index.write_tree(repo)
-  options[:author] = { :email => "user@fastly.com", :name => 'Fastly User', :time => Time.now }
-  options[:committer] = { :email => "user@fastly.com", :name => 'Fastly User', :time => Time.now }
-  options[:message] ||= "Version #{version.number}"
-  options[:parents] = repo.empty? ? [] : [ repo.head.target ].compact
-  options[:update_ref] = 'HEAD'
-  Rugged::Commit.create(repo, options)
-end
-
-repo.checkout_head(:strategy => :safe)
-puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]

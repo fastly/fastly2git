@@ -17,10 +17,16 @@ Options
     -h, --help                       Show this message
 ```
 
-# Example
+# Installation
+Clone the repo and then run the following command while in fastly2git
+directory:
+```
+sudo gem build fastly2git.gemspec && sudo gem install ./fastly2git-0.1.0.gem
 
 ```
-$ ./bin/fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
+# Example
+```
+$ fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
 Service ID: YYY
 Service Name: xvarnish.astray.com
 Importing version 1...
@@ -97,6 +103,11 @@ Version 2      return(deliver);
 Version 2    }
 ...
 ```
+
+## License
+
+The gem is available as open source under the terms of the [MIT
+License](http://opensource.org/licenses/MIT).
 
 # Future
 

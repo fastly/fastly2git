@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.email        = ['lbrocard@fastly.com']
   s.files        = ['bin/fastly2git', 'lib/fastly2git.rb', 'test/test_fastly2git.rb']
   s.homepage     = 'https://github.com/fastly/fastly2git'
-  s.add_development_dependency 'minitest', '>= 5.8.2'
   s.add_runtime_dependency     'fastly', '>= 1.2.0'
   s.add_runtime_dependency     'rugged', '>= 0.23.3'
   s.bindir       = 'bin'

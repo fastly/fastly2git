@@ -21,9 +21,9 @@ Options
 Clone the repo and then run the following command while in fastly2git
 directory:
 ```
-sudo gem build fastly2git.gemspec && sudo gem install ./fastly2git-0.1.0.gem
-
+bundle install && bundle exec rake install
 ```
+
 # Example
 ```
 $ fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl

@@ -1,28 +1,28 @@
 #!/usr/bin/env ruby
-require 'fastly2git';
-require 'optparse';
+require 'fastly2git'
+require 'optparse'
 
 clioptions = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: fastly2git [options]"
-  opts.separator ""
-  opts.separator "Create a git repository from Fastly service generated VCL."
-  opts.separator ""
-  opts.separator "Options"
+  opts.banner = 'Usage: fastly2git [options]'
+  opts.separator ''
+  opts.separator 'Create a git repository from Fastly service generated VCL.'
+  opts.separator ''
+  opts.separator 'Options'
 
-  opts.on("-a", "--apikey APIKEY", "Fastly API key") do |apikey|
+  opts.on('-a', '--apikey APIKEY', 'Fastly API key') do |apikey|
     clioptions[:apikey] = apikey
   end
-  opts.on("-s", "--serviceid SERVICEID", "Fastly service ID") do |serviceid|
+  opts.on('-s', '--serviceid SERVICEID', 'Fastly service ID') do |serviceid|
     clioptions[:serviceid] = serviceid
   end
-  opts.on("-d", "--directory DIRECTORY", "Directory") do |directory|
+  opts.on('-d', '--directory DIRECTORY', 'Directory') do |directory|
     clioptions[:directory] = directory
   end
-  opts.on("-v", "--verbose", "Run verbosely") do |v|
+  opts.on('-v', '--verbose', 'Run verbosely') do |v|
     clioptions[:verbose] = v
   end
-  opts.on_tail("-h", "--help", "Show this message") do
+  opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
   end
@@ -31,13 +31,13 @@ end.parse!
 versions = Fastly2Git.versions(clioptions)
 p versions[0]
 begin
-  repo = Rugged::Repository.new(clioptions[:directory])
+  Rugged::Repository.new(clioptions[:directory])
 rescue Rugged::RepositoryError
   repo = Rugged::Repository.init_at(clioptions[:directory])
   Fastly2Git.git(versions, repo, clioptions[:verbose])
-  puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]
+  if clioptions[:verbose]
+    puts ".... done! Imported to #{clioptions[:directory]}"
+  end
   exit
 end
-raise "Directory #{clioptions[:directory]} is already a Git repository, aborting"
-
-
+fail "Directory #{clioptions[:directory]} is already a Git repository, aborting"

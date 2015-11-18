@@ -6,20 +6,21 @@ require 'fileutils'
 class Fastyl2GitTest < Minitest::Test
   def test_export
     dir = 'test_vcl'
-    if Dir.exists?(dir)
-      FileUtils.remove_dir(dir)
-    end
+    FileUtils.remove_dir(dir) if Dir.exist?(dir)
     repo = Rugged::Repository.init_at(dir)
 
     v1 = Minitest::Mock.new
     v1.expect :number, 1
-    v1.expect :generated_vcl, (Minitest::Mock.new.expect :content, "Version 1\n")
+    v1.expect :generated_vcl,
+              (Minitest::Mock.new.expect :content, "Version 1\n")
     v2 = Minitest::Mock.new
     v2.expect :number, 2
-    v2.expect :generated_vcl, (Minitest::Mock.new.expect :content, "Version 1\nVersion 2\n")
+    v2.expect :generated_vcl,
+              (Minitest::Mock.new.expect :content, "Version 1\nVersion 2\n")
     v3 = Minitest::Mock.new
     v3.expect :number, 3
-    v3.expect :generated_vcl, (Minitest::Mock.new.expect :content, "Version 3\nVersion 3\n")
+    v3.expect :generated_vcl,
+              (Minitest::Mock.new.expect :content, "Version 3\nVersion 3\n")
 
     Fastly2Git.git([v1, v2, v3], repo, false)
 

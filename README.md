@@ -2,6 +2,9 @@
 
 Create a git repository from Fastly service generated VCL.
 
+[![Build
+Status](https://magnum.travis-ci.com/fastly/fastly2git.svg?token=cko3qJRV7zLNRYQi8Qpq&branch=master)](https://magnum.travis-ci.com/fastly/fastly2git)
+
 # Synopsis
 
 ```

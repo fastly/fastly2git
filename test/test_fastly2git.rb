@@ -52,5 +52,7 @@ class Fastyl2GitTest < Minitest::Test
 
     commit = commit.parents[0]
     assert_equal commit, nil
+
+    FileUtils.remove_dir(dir) if Dir.exist?(dir)
   end
 end

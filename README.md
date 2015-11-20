@@ -7,7 +7,7 @@ Status](https://magnum.travis-ci.com/fastly/fastly2git.svg?token=cko3qJRV7zLNRYQ
 
 # Screencast
 
-[![Screencast](https://storage.googleapis.com/fastly2git/fastly2git.gif)
+![Screencast](https://storage.googleapis.com/fastly2git/fastly2git.gif)
 
 # Synopsis
 

@@ -8,7 +8,6 @@ class Fastly2Git
               die("Couldn't find service #{options[:serviceid]}")
 
     if clioptions[:verbose]
-      puts "Service ID: #{service.id}"
       puts "Service Name: #{service.name}"
     end
 

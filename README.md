@@ -37,7 +37,6 @@ bundle exec rake -T # to see the list of other available rake tasks
 # Example
 ```
 $ fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
-Service ID: YYY
 Service Name: uuid.astray.com
 Importing version...
 Importing version...

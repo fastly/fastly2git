@@ -29,7 +29,6 @@ OptionParser.new do |opts|
 end.parse!
 
 versions = Fastly2Git.versions(clioptions)
-p versions[0]
 begin
   Rugged::Repository.new(clioptions[:directory])
 rescue Rugged::RepositoryError

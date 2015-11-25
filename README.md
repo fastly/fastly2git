@@ -1,6 +1,5 @@
 # ![Logo](logo.png) fastly2git
 
-
 Create a git repository from Fastly service generated VCL.
 
 [![Build

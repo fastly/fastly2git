@@ -3,7 +3,7 @@
 Create a git repository from Fastly service generated VCL.
 
 [![Build
-Status](https://travis-ci.org/fastly/fastly2git.svg?branch=master](https://travis-ci.org/fastly/fastly2git/)
+Status](https://travis-ci.org/fastly/fastly2git.svg?branch=master)](https://travis-ci.org/fastly/fastly2git/)
 
 # Screencast
 

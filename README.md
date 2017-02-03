@@ -24,6 +24,8 @@ Options
     -h, --help                       Show this message
 ```
 
+fastly2git will even work incrementally, pulling all new locked versions.
+
 # Installation
 Clone the repo and then run the following command while in fastly2git
 directory:

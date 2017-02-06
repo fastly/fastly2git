@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name         = 'fastly2git'
-  s.version      = '0.1.0'
+  s.version      = '0.2.0'
   s.licenses     = 'MIT'
   s.summary      = 'fastly2git'
   s.description  = 'Create a git repository from Fastly service generated VCL'

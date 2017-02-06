@@ -29,14 +29,13 @@ OptionParser.new do |opts|
 end.parse!
 
 versions = Fastly2Git.versions(clioptions)
+
 begin
-  Rugged::Repository.new(clioptions[:directory])
-rescue Rugged::RepositoryError
+  repo = Rugged::Repository.new(clioptions[:directory])
+rescue
   repo = Rugged::Repository.init_at(clioptions[:directory])
-  Fastly2Git.git(versions, repo, clioptions[:verbose])
-  if clioptions[:verbose]
-    puts ".... done! Imported to #{clioptions[:directory]}"
-  end
-  exit
 end
-fail "Directory #{clioptions[:directory]} is already a Git repository, aborting"
+
+Fastly2Git.git(versions, repo, clioptions[:verbose])
+
+puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]

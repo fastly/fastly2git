@@ -33,7 +33,7 @@ class Fastyl2GitTest < Minitest::Test
 
 def test_oneshot_single_export
     dir = 'test_oneshot_single_vcl'
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
 
     repo = Rugged::Repository.init_at(dir)
 
@@ -54,12 +54,12 @@ def test_oneshot_single_export
     commit = commit.parents[0]
     assert_equal commit, nil
 
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
   end
 
   def test_oneshot_multiple_export
     dir = 'test_oneshot_multiple_vcl'
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
 
     repo = Rugged::Repository.init_at(dir)
 
@@ -95,12 +95,12 @@ def test_oneshot_single_export
     commit = commit.parents[0]
     assert_equal commit, nil
 
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
   end
 
   def test_incremental_export
     dir = 'test_incremental_vcl'
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
 
     repo = Rugged::Repository.init_at(dir)
 
@@ -157,6 +157,6 @@ def test_oneshot_single_export
     commit = commit.parents[0]
     assert_equal commit, nil
 
-    FileUtils.remove_dir(dir) if Dir.exist?(dir)
+    FileUtils.rm_rf(dir)
   end
 end

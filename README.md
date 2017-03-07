@@ -99,7 +99,7 @@ index 9b183a1..c48023e 100644
 Or annotate the VCL by version:
 
 ```
-$ git blame --line-porcelain generated.vcl | perl -lne 'if ($_ =~
+$ git annotate --line-porcelain generated.vcl | perl -lne 'if ($_ =~
 s/^\t//) { printf "%-10.10s %s\n", $s, $_} else { ($k, $v) = split(" ",
 $_,2); $s = $v if $k eq "summary" }'
 ...

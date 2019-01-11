@@ -36,6 +36,10 @@ rescue
   repo = Rugged::Repository.init_at(clioptions[:directory])
 end
 
-Fastly2Git.git(versions, repo, clioptions[:verbose])
+local_versions = Fastly2Git.local_versions(repo)
+
+details = Fastly2Git.details(versions, local_versions, clioptions)
+
+Fastly2Git.git(versions, local_versions, details, repo, clioptions[:verbose])
 
 puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]

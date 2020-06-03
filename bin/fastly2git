@@ -22,13 +22,21 @@ OptionParser.new do |opts|
   opts.on('-v', '--verbose', 'Run verbosely') do |v|
     clioptions[:verbose] = v
   end
+  opts.on('-S', '--snippets', 'Include Snippets in repository') do |snippets|
+    clioptions[:snippets] = snippets
+  end
+  opts.on('-b', '--boilerplate', 'Include Boilerplate in repository') do |boilerplate|
+    clioptions[:boilerplate] = boilerplate
+  end
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
   end
 end.parse!
 
+# @type [Array<Fastly::Version>]
 versions = Fastly2Git.versions(clioptions)
+
 
 begin
   repo = Rugged::Repository.new(clioptions[:directory])
@@ -36,6 +44,8 @@ rescue
   repo = Rugged::Repository.init_at(clioptions[:directory])
 end
 
-Fastly2Git.git(versions, repo, clioptions[:verbose])
+Fastly2Git.git(versions, repo, clioptions[:verbose], clioptions[:snippets], clioptions[:boilerplate])
 
 puts ".... done! Imported to #{clioptions[:directory]}" if clioptions[:verbose]
+
+

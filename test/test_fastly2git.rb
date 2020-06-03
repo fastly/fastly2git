@@ -37,7 +37,7 @@ def test_oneshot_single_export
 
     repo = Rugged::Repository.init_at(dir)
 
-    Fastly2Git.git([version1], repo, false)
+    Fastly2Git.git([version1], repo, false, false, false)
     repo = Rugged::Repository.new(dir)
 
     ref = repo.head
@@ -63,7 +63,7 @@ def test_oneshot_single_export
 
     repo = Rugged::Repository.init_at(dir)
 
-    Fastly2Git.git([version1, version2, version3], repo, false)
+    Fastly2Git.git([version1, version2, version3], repo, false, false, false)
     repo = Rugged::Repository.new(dir)
 
     ref = repo.head
@@ -104,7 +104,7 @@ def test_oneshot_single_export
 
     repo = Rugged::Repository.init_at(dir)
 
-    Fastly2Git.git([version1, version2], repo, false)
+    Fastly2Git.git([version1, version2], repo, false, false, false)
     repo = Rugged::Repository.new(dir)
 
     ref = repo.head
@@ -126,7 +126,7 @@ def test_oneshot_single_export
     assert_equal tree[:name], 'generated.vcl'
     assert_equal repo.lookup(tree[:oid]).content, "Version 1\n"
 
-    Fastly2Git.git([version1, version2, version3], repo, false)
+    Fastly2Git.git([version1, version2, version3], repo, false, false, false)
 
     ref = repo.head
     assert_equal ref.name, 'refs/heads/master'

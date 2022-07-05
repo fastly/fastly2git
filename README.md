@@ -7,7 +7,7 @@ Status](https://travis-ci.org/fastly/fastly2git.svg?branch=master)](https://trav
 
 # Screencast
 
-![Screencast](https://storage.googleapis.com/fastly2git/fastly2git.gif)
+![Screencast](fastly2git.gif)
 
 # Synopsis
 

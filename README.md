@@ -53,6 +53,19 @@ Importing version...
 .... done! Imported to /tmp/vcl
 ```
 
+# Docker
+
+Build first the image by cloning the repo and executing the following 
+command while in fastly2git directly:
+```
+docker build -t fastly2git . 
+```
+You can then execute the tool as follows:
+```
+mkdir /tmp/vcl
+docker run -ti -v /tmp/vcl:/tmp/vcl fastly2git -v --apikey XXX --serviceid YYY --directory /tmp/vcl
+```
+
 # Inspect
 
 Then change to the new directory:
